@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>테트리스</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,6 +10,7 @@
   <div class="container">
     <header>
       <h1>테트리스</h1>
+      <button id="mute-btn" type="button" class="mute-btn" aria-label="음소거" aria-pressed="false">🔊</button>
     </header>
 
     <main class="game-area">
@@ -29,6 +30,11 @@
           <p id="score" class="score-value">0</p>
         </div>
 
+        <div class="score-box">
+          <h2>레벨</h2>
+          <p id="level" class="score-value level-value">1</p>
+        </div>
+
         <div class="button-group">
           <button id="start-btn" type="button">시작</button>
           <button id="restart-btn" type="button">재시작</button>
@@ -36,17 +42,26 @@
 
         <div class="controls-guide">
           <h2>조작법</h2>
-          <p class="controls-note">시작 버튼을 누른 뒤 키보드로 조작합니다.</p>
+          <p class="controls-note">시작 버튼을 누른 뒤 키보드 또는 터치 버튼으로 조작합니다.</p>
           <ul>
-            <li><kbd>←</kbd> <kbd>ArrowLeft</kbd> 왼쪽 이동</li>
-            <li><kbd>→</kbd> <kbd>ArrowRight</kbd> 오른쪽 이동</li>
-            <li><kbd>↓</kbd> <kbd>ArrowDown</kbd> 한 칸 빠르게 내리기</li>
-            <li><kbd>↑</kbd> <kbd>ArrowUp</kbd> 회전</li>
-            <li><kbd>Space</kbd> 즉시 낙하 (Hard Drop)</li>
+            <li><kbd>←</kbd> <kbd>ArrowLeft</kbd> / ◀ 왼쪽 이동</li>
+            <li><kbd>→</kbd> <kbd>ArrowRight</kbd> / ▶ 오른쪽 이동</li>
+            <li><kbd>↓</kbd> <kbd>ArrowDown</kbd> / ▼ 한 칸 빠르게 내리기</li>
+            <li><kbd>↑</kbd> <kbd>ArrowUp</kbd> / ⟳ 회전</li>
+            <li><kbd>Space</kbd> / ⤓ 즉시 낙하 (Hard Drop)</li>
+            <li>🔊 / 🔇 음소거 토글</li>
           </ul>
         </div>
       </aside>
     </main>
+
+    <nav id="touch-controls" class="touch-controls" aria-label="터치 조작">
+      <button id="touch-left" type="button" aria-label="왼쪽 이동">◀</button>
+      <button id="touch-rotate" type="button" aria-label="회전">⟳</button>
+      <button id="touch-right" type="button" aria-label="오른쪽 이동">▶</button>
+      <button id="touch-down" type="button" aria-label="한 칸 내리기">▼</button>
+      <button id="touch-hard-drop" type="button" aria-label="하드 드롭">⤓</button>
+    </nav>
   </div>
 
   <script src="script.js"></script>
