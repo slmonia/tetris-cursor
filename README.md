@@ -5,13 +5,11 @@ HTML, CSS, JavaScript만 사용하며 빌드 도구와 외부 라이브러리는
 
 ## 라이브 데모
 
-GitHub Pages 배포 후 아래 주소에서 플레이할 수 있습니다.
+GitHub Pages에서 플레이할 수 있습니다.
 
-```
-https://<GitHub아이디>.github.io/tetris-cursor/
-```
+**https://slmonia.github.io/tetris-cursor/**
 
-> 저장소 이름을 `tetris-cursor`로 만들어야 위 URL이 동작합니다.
+> Pages가 404라면 저장소 **Settings → Pages**에서 `main` / `/ (root)` 배포를 활성화하세요.
 
 ## 실행 방법
 
@@ -19,7 +17,7 @@ https://<GitHub아이디>.github.io/tetris-cursor/
 
 1. 이 폴더를 연다.
 2. `index.html`을 더블클릭하거나 브라우저로 드래그한다.
-3. **시작** 버튼을 누른 뒤 키보드로 조작한다.
+3. **시작** 버튼을 누른 뒤 키보드 또는 터치 버튼으로 조작한다.
 
 ### 방법 2: VS Code Live Server (선택)
 
@@ -32,6 +30,8 @@ https://<GitHub아이디>.github.io/tetris-cursor/
 
 ## 조작법
 
+### 키보드 (PC)
+
 | 키 | 동작 |
 |----|------|
 | `ArrowLeft` | 왼쪽 이동 |
@@ -40,7 +40,24 @@ https://<GitHub아이디>.github.io/tetris-cursor/
 | `ArrowUp` | 회전 |
 | `Space` | 즉시 낙하 (Hard Drop) |
 
-- **시작**을 누르기 전에는 키보드 조작이 동작하지 않습니다.
+### 터치 버튼 (모바일·좁은 화면)
+
+| 버튼 | 동작 |
+|------|------|
+| ◀ | 왼쪽 이동 |
+| ▶ | 오른쪽 이동 |
+| ⟳ | 회전 |
+| ▼ | 한 칸 빠르게 내리기 |
+| ⤓ | 즉시 낙하 (Hard Drop) |
+
+### 사운드
+
+| 버튼 | 동작 |
+|------|------|
+| 🔊 / 🔇 | BGM·효과음 음소거 토글 (헤더 우측) |
+
+- **시작**을 누르기 전에는 키보드·터치 조작이 동작하지 않습니다.
+- 브라우저 자동재생 정책 때문에, **시작** 버튼 또는 화면 터치 후 소리가 재생됩니다.
 - 충돌이 발생하는 이동·회전은 적용되지 않습니다.
 - **재시작**으로 보드와 점수를 초기화합니다. (재시작 후 **시작**을 다시 눌러야 합니다.)
 - 게임 오버 후에는 **재시작** → **시작** 순서로 다시 플레이합니다.
@@ -49,13 +66,15 @@ https://<GitHub아이디>.github.io/tetris-cursor/
 
 | 기능 | 설명 |
 |------|------|
-| 게임 보드 | 10열 × 20행 CSS Grid |
+| 게임 보드 | 10열 × 20행 CSS Grid (반응형 스케일) |
 | 블록 | I, O, T, S, Z, J, L 7종 |
-| 자동 낙하 | 0.8초 간격 |
+| 자동 낙하 | 레벨에 따라 속도 증가 (0.8초 기준) |
 | 충돌 판정 | `canMove()` — 경계·고정 블록 검사 |
 | 키보드 조작 | 이동, 회전, 소프트/하드 드롭 |
+| 모바일/터치 조작 | 화면 하단 터치 버튼 (좁은 화면·터치 기기) |
+| 사운드 | Web Audio API 합성 효과음·BGM·음소거 |
 | 라인 삭제 | 가득 찬 줄 제거 후 위 줄 하강 |
-| 점수 | 삭제 줄 수에 따라 가산 (아래 표 참고) |
+| 점수·레벨 | 삭제 줄 수에 따라 점수·레벨 상승 |
 | 게임 오버 | 새 블록 스폰 불가 시 종료 + 오버레이 |
 | 재시작 | 보드·점수·타이머·상태 초기화 |
 
@@ -68,13 +87,26 @@ https://<GitHub아이디>.github.io/tetris-cursor/
 | 3줄 | 500 |
 | 4줄 (테트리스) | 800 |
 
+### 사운드 (외부 파일 없음)
+
+| 상황 | 소리 |
+|------|------|
+| 좌우 이동 | 짧은 클릭음 |
+| 회전 | 중간 음높이 짧은 음 |
+| 하드 드롭 | 낮은 둔탁한 음 |
+| 1~3줄 삭제 | 상승 음 |
+| 4줄 (테트리스) | 아르페지오 |
+| 레벨 업 | 상승 멜로디 (10줄마다) |
+| 게임 오버 | 하강 음 |
+| 게임 중 | BGM 루프 (시작 시 재생, 종료 시 정지) |
+
 ## 파일 구조
 
 ```
 tetris-cursor/
 ├── index.html          # 페이지 구조
-├── style.css           # 스타일
-├── script.js           # 게임 로직
+├── style.css           # 스타일 (반응형·터치)
+├── script.js           # 게임 로직 + 사운드
 ├── README.md           # 프로젝트 문서
 ├── .gitignore
 └── .cursor/commands/   # Cursor 품질 점검 Command (선택)
@@ -96,7 +128,7 @@ Cursor 채팅(Agent 모드)에서 `/` + Command 이름으로 품질 게이트를
 | `/refactor-safe` | 기능 유지 구조 개선 |
 | `/release-check` | 배포 전 최종 점검 |
 
-### 5장 — 고도화 (선택)
+### 5장 — 고도화
 
 | Command | 점검 내용 |
 |---------|-----------|
@@ -108,46 +140,51 @@ Cursor 채팅(Agent 모드)에서 `/` + Command 이름으로 품질 게이트를
 ### 수동 스모크 테스트
 
 1. **시작** → 블록이 자동으로 내려오는지 확인
-2. 방향키·Space로 조작되는지 확인
-3. 한 줄을 채워 점수 +100 확인
-4. 보드를 가득 채워 게임 오버 확인
-5. **재시작** → **시작**으로 재개 확인
-6. F12 Console에 오류가 없는지 확인
+2. 방향키·Space 또는 터치 버튼으로 조작되는지 확인
+3. 이동·회전·삭제·테트리스 시 효과음 확인
+4. 🔊 버튼으로 음소거 토글 확인
+5. 한 줄을 채워 점수 +100 확인
+6. 보드를 가득 채워 게임 오버 확인
+7. **재시작** → **시작**으로 재개 확인
+8. F12 Console에 오류가 없는지 확인
+9. 개발자 도구 모바일 시뮬레이터에서 터치 버튼·반응형 레이아웃 확인
 
 ## GitHub Pages 배포 방법
 
-### 1. 저장소 생성
+### 1. 저장소
 
-1. GitHub에서 새 저장소를 만든다.
-2. Repository name: **`tetris-cursor`**
-3. Public 선택, README는 추가하지 않는다 (로컬에 있음).
+저장소: **https://github.com/slmonia/tetris-cursor**
 
-### 2. 로컬에서 Git 초기화 및 푸시
+### 2. 변경 사항 push
 
 ```bash
 cd tetris-cursor
-git init
-git add index.html style.css script.js README.md .gitignore
-git add .cursor/commands/
-git commit -m "Add tetris-cursor browser game"
-git branch -M main
-git remote add origin https://github.com/<GitHub아이디>/tetris-cursor.git
-git push -u origin main
+git add .
+git commit -m "feat: 사운드·모바일 대응 추가"
+git push
 ```
 
-### 3. Pages 설정
+### 3. Pages 설정 (최초 1회)
 
 1. 저장소 → **Settings** → **Pages**
 2. Source: **Deploy from a branch**
 3. Branch: **`main`** / **`/ (root)`**
 4. Save
 
-1~2분 후 `https://<GitHub아이디>.github.io/tetris-cursor/` 에서 확인한다.
+`main` 브랜치에 push하면 Pages가 자동으로 갱신됩니다.
+
+### 4. 배포 후 확인
+
+1. 1~2분 후 **https://slmonia.github.io/tetris-cursor/** 접속
+2. PC: 키보드 조작 + 사운드 확인
+3. 스마트폰 브라우저: 터치 버튼·반응형 보드·BGM/효과음 확인
+4. 음소거(🔇) 토글 동작 확인
 
 ### 배포 시 주의사항
 
-- CSS/JS는 **상대 경로**(`style.css`, `script.js`)를 사용해야 합니다. (`/style.css`처럼 루트 절대 경로는 저장소 이름이 URL에 포함될 때 깨질 수 있습니다.)
+- CSS/JS는 **상대 경로**(`style.css`, `script.js`)를 사용해야 합니다.
 - `index.html`은 저장소 **루트**에 있어야 합니다.
+- 사운드는 Web Audio API 합성 방식이라 별도 음원 파일이 필요 없습니다.
 
 ## 라이선스
 
