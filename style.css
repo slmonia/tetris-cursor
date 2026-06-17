@@ -11,43 +11,79 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  touch-action: manipulation;
 }
 
 .container {
-  padding: 24px;
+  width: 100%;
+  max-width: 720px;
+  padding: 16px;
+  padding-bottom: 24px;
 }
 
 header {
+  position: relative;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 header h1 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   letter-spacing: 0.1em;
+}
+
+.mute-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 8px 12px;
+  font-size: 1.25rem;
+  background-color: #2a2a4a;
+  color: #eee;
+  border: 1px solid #4a4a6a;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mute-btn:hover {
+  background-color: #3a3a5a;
 }
 
 .game-area {
   display: flex;
-  gap: 32px;
+  gap: 24px;
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
+  touch-action: none;
 }
 
-#game-board {
-  display: grid;
-  grid-template-columns: repeat(10, 30px);
-  grid-template-rows: repeat(20, 30px);
-  background-color: #0f0f1a;
-  border: 3px solid #4a4a6a;
-  border-radius: 4px;
-  gap: 0;
+.board-section {
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 300px;
 }
 
 .board-wrapper {
   position: relative;
+  width: 100%;
+  touch-action: none;
+}
+
+#game-board {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 10 / 20;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  background-color: #0f0f1a;
+  border: 3px solid #4a4a6a;
+  border-radius: 4px;
+  gap: 0;
+  touch-action: none;
 }
 
 .game-over {
@@ -80,8 +116,8 @@ header h1 {
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
+  width: 100%;
+  aspect-ratio: 1;
   border: 1px solid #2a2a4a;
   background-color: #0f0f1a;
 }
@@ -97,8 +133,9 @@ header h1 {
 .info-panel {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  min-width: 180px;
+  gap: 20px;
+  width: 100%;
+  max-width: 280px;
 }
 
 .score-box h2,
@@ -111,9 +148,13 @@ header h1 {
 }
 
 .score-value {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 6vw, 2.5rem);
   font-weight: bold;
   color: #4ecdc4;
+}
+
+.level-value {
+  font-size: clamp(1.5rem, 5vw, 2rem);
 }
 
 .button-group {
@@ -124,6 +165,7 @@ header h1 {
 
 button {
   padding: 12px 24px;
+  min-height: 48px;
   font-size: 1rem;
   font-weight: bold;
   border: none;
@@ -163,6 +205,7 @@ button {
 .controls-guide li {
   margin-bottom: 8px;
   line-height: 1.6;
+  font-size: 0.9rem;
 }
 
 kbd {
@@ -173,4 +216,75 @@ kbd {
   border-radius: 4px;
   font-family: monospace;
   font-size: 0.9rem;
+}
+
+.touch-controls {
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 8px;
+}
+
+.touch-controls button {
+  min-height: 56px;
+  min-width: 48px;
+  font-size: 1.25rem;
+  background-color: #2a2a4a;
+  color: #eee;
+  border: 1px solid #4a4a6a;
+  border-radius: 8px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.touch-controls button:active {
+  background-color: #4ecdc4;
+  color: #1a1a2e;
+}
+
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  body {
+    align-items: flex-start;
+  }
+
+  .container {
+    padding-bottom: 16px;
+  }
+
+  .game-area {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board-section {
+    max-width: min(100%, 320px);
+  }
+
+  .info-panel {
+    max-width: 100%;
+  }
+
+  .button-group {
+    flex-direction: row;
+  }
+
+  .button-group button {
+    flex: 1;
+  }
+
+  .touch-controls {
+    display: grid;
+  }
+
+  .controls-guide .desktop-only {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (hover: hover) and (pointer: fine) {
+  .touch-controls {
+    display: none;
+  }
 }
